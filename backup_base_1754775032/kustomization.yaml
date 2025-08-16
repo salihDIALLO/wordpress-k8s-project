@@ -8,14 +8,14 @@ resources:
   - wordpress/wordpress-pvc.yaml
 
   # MariaDB
-  - mariadb/mariadb-statefulset.yaml
+  - mariadb/mariadb-deployment.yaml
   - mariadb/mariadb-service.yaml
   - mariadb/mariadb-secret.yaml
-  - mariadb/mariadb-deployment.yaml
+  - mariadb/mariadb-statefulset.yaml
 
-  # Monitoring (mysqld-exporter + ServiceMonitor)
+  # Monitoring
   - monitoring/mysqld-exporter.yaml
 
-  # ArgoCD Application manifests (optionnels)
+  # ArgoCD Applications
   - argocd/argocd-application-wordpress.yaml
   - argocd/argocd-application-monitoring.yaml

@@ -1,0 +1,33 @@
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  name: site-prometheus
+  namespace: monitoring
+spec:
+  replicas: 1
+  serviceAccountName: prometheus-k8s
+  serviceMonitorSelector:
+    matchLabels:
+      release: prometheus
+  ruleSelector:
+    matchLabels:
+      role: alert-rules
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: basic-rules
+  namespace: monitoring
+  labels:
+    role: alert-rules
+spec:
+  groups:
+  - name: example.rules
+    rules:
+    - alert: HighMemoryUsage
+      expr: sum(container_memory_usage_bytes{container!=""}) by (namespace) > 1e+09
+      for: 2m
+      labels:
+        severity: warning
+      annotations:
+        summary: "High memory usage in namespace {{ $labels.namespace }}"

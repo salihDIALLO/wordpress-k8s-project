@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: wordpress
+  labels:
+    app: wordpress
 spec:
   replicas: 1
   selector:
@@ -40,4 +42,6 @@ spec:
               mountPath: /var/www/html
       volumes:
         - name: wordpress-storage
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: wordpress-pvc
+
