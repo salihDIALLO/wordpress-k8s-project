@@ -1,17 +1,12 @@
-cluster: minikube
-provider: local
-gitKind: github
-gitUsername: salihdiallo
-gitOwner: salihdiallo
-environmentGitOwner: salihdiallo
-gitServer: https://github.com
-dockerRegistry: ghcr.io
-namespace: jx
+apiVersion: jenkins.io/v1
+kind: Requirements
 environments:
-  - name: dev
-    namespace: jx
-    label: Development
-  - name: staging
-    namespace: jx
-    label: Staging
-
+  - key: dev
+    namespace: jx-dev
+    promotionStrategy: Automatic
+  - key: staging
+    namespace: jx-staging
+    promotionStrategy: Automatic
+  - key: production
+    namespace: jx-production
+    promotionStrategy: Manual
