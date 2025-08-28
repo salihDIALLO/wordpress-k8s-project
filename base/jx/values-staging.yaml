@@ -1,0 +1,28 @@
+replicaCount: 1
+
+image:
+  repository: ghcr.io/salihDIALLO/wordpress
+  tag: latest        # ou "{{ .IMAGE_TAG }}" si tu utilises la version par commit
+  pullPolicy: IfNotPresent
+
+imagePullSecrets:
+  - name: ghcr-secret
+
+service:
+  type: ClusterIP
+  port: 80
+
+wordpress:
+  wordpressUsername: admin
+  wordpressPassword: changeme
+  wordpressEmail: admin@example.com
+  wordpressBlogName: "WordPress Staging"
+
+mariadb:
+  auth:
+    rootPassword: rootpassword
+    password: userpassword
+  primary:
+    persistence:
+      enabled: true
+      size: 10Gi
