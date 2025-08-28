@@ -1,0 +1,17 @@
+cluster: minikube
+provider: local
+gitKind: github
+gitUsername: salihdiallo
+gitOwner: salihdiallo
+environmentGitOwner: salihdiallo
+gitServer: https://github.com
+dockerRegistry: ghcr.io
+namespace: jx
+environments:
+  - name: dev
+    namespace: jx
+    label: Development
+  - name: staging
+    namespace: jx
+    label: Staging
+
