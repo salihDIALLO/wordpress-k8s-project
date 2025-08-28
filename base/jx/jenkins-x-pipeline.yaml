@@ -1,0 +1,21 @@
+buildPack: classic
+pipelineConfig:
+  pipelines:
+    release:
+      steps:
+        - name: build-docker
+          command: |
+            # Versionner l'image avec le commit SHA
+            IMAGE_TAG=$(git rev-parse --short HEAD)
+            docker build -t ghcr.io/salihDIALLO/wordpress:${IMAGE_TAG} ./wordpress
+            docker push ghcr.io/salihDIALLO/wordpress:${IMAGE_TAG}
+          env:
+            - name: DOCKER_CONFIG
+              value: /kaniko/.docker
+        - name: deploy-staging
+          command: |
+            # Déploiement Helm vers staging
+            jx step helm apply --values values-staging.yaml
+          env:
+            - name: IMAGE_TAG
+              value: $(git rev-parse --short HEAD)
