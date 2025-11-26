@@ -33,7 +33,7 @@ jobs:
       # 3️⃣ Build Docker image (all lowercase)
       - name: Build Docker image
         run: |
-          docker build -t ghcr.io/salihdiallo/wordpress-k8s-project/wordpress:latest .
+          docker build -t ghcr.io/salihdiallo/wordpress-k8s-project/wordpress:latest ./base/jx
 
       # 4️⃣ Push Docker image to GHCR
       - name: Push Docker image
