@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-dashboard
+  namespace: monitoring
+  labels:
+    grafana_dashboard: "1"
+data:
+  mysql-dashboard.json: |
+    {
+      "id": null,
+      "uid": "mysql-simple-001",
+      "title": "MariaDB - Overview",
+      "schemaVersion": 27,
+      "version": 1,
+      "panels": [
+        {
+          "type": "graph",
+          "title": "Queries per second",
+          "gridPos": {"x":0,"y":0,"w":24,"h":8},
+          "targets": [
+            {
+              "expr": "rate(mysql_global_status_questions[5m])",
+              "legendFormat": "QPS"
+            }
+          ]
+        },
+        {
+          "type": "stat",
+          "title": "Connections",
+          "gridPos": {"x":0,"y":8,"w":6,"h":4},
+          "targets": [
+            {
+              "expr": "mysql_global_status_threads_connected",
+              "legendFormat": ""
+            }
+          ]
+        }
+      ],
+      "templating": { "list": [] }
+    }

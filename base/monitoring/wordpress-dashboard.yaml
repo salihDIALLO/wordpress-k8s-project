@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: wordpress-dashboard
+  namespace: monitoring
+  labels:
+    grafana_dashboard: "1"
+data:
+  wordpress-dashboard.json: |
+    {
+      "id": null,
+      "uid": "wp-simple-001",
+      "title": "WordPress - Overview",
+      "tags": ["wordpress"],
+      "timezone": "browser",
+      "schemaVersion": 27,
+      "version": 1,
+      "refresh": "30s",
+      "panels": [
+        {
+          "type": "graph",
+          "title": "HTTP Requests (by pod)",
+          "gridPos": {"x":0,"y":0,"w":24,"h":8},
+          "targets": [
+            {
+              "expr": "sum(rate(nginx_ingress_controller_requests[5m])) by (pod)",
+              "legendFormat": "{{pod}}"
+            }
+          ]
+        },
+        {
+          "type": "stat",
+          "title": "Active PHP-FPM processes (example)",
+          "gridPos": {"x":0,"y":8,"w":6,"h":4},
+          "targets": [
+            {
+              "expr": "php_fpm_active_processes",
+              "legendFormat": ""
+            }
+          ]
+        }
+      ],
+      "templating": { "list": [] }
+    }
+
