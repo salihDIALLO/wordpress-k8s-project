@@ -6,31 +6,32 @@ on:
       - main
     paths:
       - "Dockerfile"
+      - "src/**"
       - ".github/workflows/build-wordpress.yaml"
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
-    permissions:
-      contents: read
-      packages: write
-
     steps:
-      - name: Checkout
+      # 1️⃣ Récupérer le code du repo
+      - name: Checkout repository
         uses: actions/checkout@v4
 
+      # 2️⃣ Connexion à GHCR avec token stocké dans GitHub Secrets
       - name: Login to GHCR
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.GHCR_PAT }}
 
-      - name: Build image
+      # 3️⃣ Construire l'image Docker (noms en minuscules)
+      - name: Build Docker image
         run: |
-          docker build -t ghcr.io/${{ github.repository_owner }}/wordpress:latest .
+          docker build -t ghcr.io/salihdiallo/wordpress-k8s-project/wordpress:latest .
 
-      - name: Push image
+      # 4️⃣ Pousser l'image sur GHCR
+      - name: Push Docker image
         run: |
-          docker push ghcr.io/${{ github.repository_owner }}/wordpress:latest
+          docker push ghcr.io/salihdiallo/wordpress-k8s-project/wordpress:latest
