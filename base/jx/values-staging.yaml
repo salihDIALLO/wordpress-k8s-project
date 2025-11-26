@@ -1,6 +1,6 @@
 replicaCount: 1
 
-image:
+image: "ghcr.io/salihdiallo/wordpress-k8s-project/wordpress:latest"
   repository: ghcr.io/salihDIALLO/wordpress
   tag: latest        # ou "{{ .IMAGE_TAG }}" si tu utilises la version par commit
   pullPolicy: IfNotPresent
